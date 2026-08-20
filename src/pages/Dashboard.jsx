@@ -10,7 +10,7 @@ import SavingsGoal from "../components/SavingsGoal";
 import StreakCard from "../components/StreakCard";
 import { Link } from "react-router-dom";
 import { ArrowLeft } from "lucide-react";
-
+import { BarChart3 } from "lucide-react";
 export default function Dashboard() {
   const [entries, setEntries] = useState(() => getEntries());
   const [goal, setGoalState] = useState(() => getGoal());
@@ -44,7 +44,16 @@ export default function Dashboard() {
               </p>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <Link
+              to="/reports"
+              className="flex items-center gap-1.5 text-sm bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300 px-3 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
+            >
+              <BarChart3 size={16} />
+              Reportes
+            </Link>
+            <ThemeToggle />
+          </div>
         </header>
 
         <StatsCards entries={entries} />
