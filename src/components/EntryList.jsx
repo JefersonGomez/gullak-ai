@@ -1,22 +1,34 @@
-import { Trash2 } from "lucide-react"
-import { motion, AnimatePresence } from "framer-motion"
 
+import { motion, AnimatePresence } from "framer-motion";
+import { Trash2, Download } from "lucide-react";
+import { exportToCSV } from "../lib/storage";
 export default function EntryList({ entries, onDelete }) {
   if (entries.length === 0) {
     return (
       <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6 text-center text-neutral-400 dark:text-neutral-500">
         Aún no hay registros. Agrega el primero.
       </div>
-    )
+    );
   }
 
   return (
     <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6">
-      <h2 className="text-lg font-semibold text-neutral-800 dark:text-white mb-4">Historial</h2>
+      <div className="flex items-center justify-between mb-4">
+        <h2 className="text-lg font-semibold text-neutral-800 dark:text-white">
+          Historial
+        </h2>
+        <button
+          onClick={() => exportToCSV(entries)}
+          className="flex items-center gap-1.5 text-sm text-emerald-600 dark:text-emerald-400 hover:underline"
+        >
+          <Download size={14} />
+          Exportar CSV
+        </button>
+      </div>
       <div className="flex flex-col gap-2 max-h-80 overflow-y-auto pr-1">
         <AnimatePresence>
           {entries.map((entry) => {
-            const net = entry.sales - entry.expenses
+            const net = entry.sales - entry.expenses;
             return (
               <motion.div
                 key={entry.id}
@@ -28,7 +40,9 @@ export default function EntryList({ entries, onDelete }) {
                 className="flex items-center justify-between border-b border-neutral-100 dark:border-neutral-800 pb-2 last:border-0"
               >
                 <div>
-                  <p className="text-sm text-neutral-500 dark:text-neutral-400">{entry.date}</p>
+                  <p className="text-sm text-neutral-500 dark:text-neutral-400">
+                    {entry.date}
+                  </p>
                   <p className="text-sm text-neutral-700 dark:text-neutral-300">
                     Ventas: ₹{entry.sales} · Gastos: ₹{entry.expenses}
                   </p>
@@ -48,10 +62,10 @@ export default function EntryList({ entries, onDelete }) {
                   </button>
                 </div>
               </motion.div>
-            )
+            );
           })}
         </AnimatePresence>
       </div>
     </div>
-  )
+  );
 }
