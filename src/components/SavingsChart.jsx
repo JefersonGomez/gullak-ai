@@ -52,7 +52,7 @@ export default function SavingsChart({ entries }) {
     }
   }
     return (
-    <div className="bg-white rounded-2xl shadow-sm p-6">
+   <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6">
       <h2 className="text-lg font-semibold text-neutral-800 mb-4">
         Ventas vs Gastos (últimos {recent.length} días)
       </h2>

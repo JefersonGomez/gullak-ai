@@ -1,24 +1,27 @@
-import { useState } from "react";
-import {getSavingsAdvice } from "../lib/gemini"
+import { useState } from "react"
+import { Sparkles } from "lucide-react"
+import { getSavingsAdvice } from "../lib/gemini"
 
-export default function AdviceCard({entries}){
-    const [advice,setAdvice] = useState(null)
-    const [loading,setLoading] = useState(false)
+export default function AdviceCard({ entries }) {
+  const [advice, setAdvice] = useState(null)
+  const [loading, setLoading] = useState(false)
 
+  async function handleClick() {
+    setLoading(true)
+    const result = await getSavingsAdvice(entries)
+    setAdvice(result)
+    setLoading(false)
+  }
 
-    async function handleClick(){
-        setLoading(true)
-        const result = await getSavingsAdvice(entries)
-        setAdvice(result)
-        setLoading(false)
-    }
-
-    return (
-    <div className="bg-emerald-50 border border-emerald-200 rounded-2xl shadow-sm p-6 flex flex-col gap-4">
-      <h2 className="text-lg font-semibold text-emerald-800">Consejo de ahorro</h2>
+  return (
+    <div className="bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-900 rounded-2xl shadow-sm p-6 flex flex-col gap-4">
+      <h2 className="text-lg font-semibold text-emerald-800 dark:text-emerald-300 flex items-center gap-2">
+        <Sparkles size={18} />
+        Consejo de ahorro
+      </h2>
 
       {advice && (
-        <p className="text-neutral-700 leading-relaxed">{advice}</p>
+        <p className="text-neutral-700 dark:text-neutral-300 leading-relaxed">{advice}</p>
       )}
 
       <button
