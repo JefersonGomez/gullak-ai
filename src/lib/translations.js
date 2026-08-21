@@ -55,6 +55,7 @@ export const translations = {
     colExpenses: "Gastos",
     colNet: "Neto",
     reminderText: "Aún no has registrado tus ventas de hoy. ¡No pierdas tu racha!",
+    vsLastWeek: "vs sem. anterior",
   },
   en: {
     appName: "GullakAI",
@@ -112,6 +113,7 @@ export const translations = {
     colExpenses: "Expenses",
     colNet: "Net",
     reminderText: "You haven't logged today's sales yet. Don't break your streak!",
+    vsLastWeek: "vs last week",
   },
   hi: {
     appName: "GullakAI",
@@ -169,5 +171,6 @@ export const translations = {
     colExpenses: "खर्च",
     colNet: "शुद्ध",
     reminderText: "आपने आज की बिक्री अभी तक दर्ज नहीं की है। अपनी लगातार श्रृंखला न तोड़ें!",
+    vsLastWeek: "पिछले सप्ताह की तुलना में",
   },
 }
