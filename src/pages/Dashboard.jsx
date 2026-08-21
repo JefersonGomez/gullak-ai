@@ -12,6 +12,7 @@ import LanguageSelector from "../components/LanguageSelector"
 import SavingsGoal from "../components/SavingsGoal"
 import StreakCard from "../components/StreakCard"
 import { useLanguage } from "../lib/useLanguage"
+import DailyReminder from "../components/DailyReminder"
 
 export default function Dashboard() {
   const [entries, setEntries] = useState(() => getEntries())
@@ -56,6 +57,7 @@ export default function Dashboard() {
             <ThemeToggle />
           </div>
         </header>
+        <DailyReminder entries={entries} />
 
         <StatsCards entries={entries} />
 

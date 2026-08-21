@@ -54,6 +54,7 @@ export const translations = {
     colSales: "Ventas",
     colExpenses: "Gastos",
     colNet: "Neto",
+    reminderText: "Aún no has registrado tus ventas de hoy. ¡No pierdas tu racha!",
   },
   en: {
     appName: "GullakAI",
@@ -110,6 +111,7 @@ export const translations = {
     colSales: "Sales",
     colExpenses: "Expenses",
     colNet: "Net",
+    reminderText: "You haven't logged today's sales yet. Don't break your streak!",
   },
   hi: {
     appName: "GullakAI",
@@ -166,5 +168,6 @@ export const translations = {
     colSales: "बिक्री",
     colExpenses: "खर्च",
     colNet: "शुद्ध",
+    reminderText: "आपने आज की बिक्री अभी तक दर्ज नहीं की है। अपनी लगातार श्रृंखला न तोड़ें!",
   },
 }
