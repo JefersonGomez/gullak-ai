@@ -1,26 +1,29 @@
-import { useState } from "react";
-import { getEntries, addEntry, deleteEntry, getGoal } from "../lib/storage";
-import EntryForm from "../components/EntryForm";
-import EntryList from "../components/EntryList";
-import SavingsChart from "../components/SavingsChart";
-import AdviceCard from "../components/AdviceCard";
-import StatsCards from "../components/StatsCards";
-import ThemeToggle from "../components/ThemeToggle";
-import SavingsGoal from "../components/SavingsGoal";
-import StreakCard from "../components/StreakCard";
-import { Link } from "react-router-dom";
-import { ArrowLeft } from "lucide-react";
-import { BarChart3 } from "lucide-react";
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { ArrowLeft, BarChart3 } from "lucide-react"
+import { getEntries, addEntry, deleteEntry, getGoal } from "../lib/storage"
+import EntryForm from "../components/EntryForm"
+import EntryList from "../components/EntryList"
+import SavingsChart from "../components/SavingsChart"
+import AdviceCard from "../components/AdviceCard"
+import StatsCards from "../components/StatsCards"
+import ThemeToggle from "../components/ThemeToggle"
+import LanguageSelector from "../components/LanguageSelector"
+import SavingsGoal from "../components/SavingsGoal"
+import StreakCard from "../components/StreakCard"
+import { useLanguage } from "../lib/useLanguage"
+
 export default function Dashboard() {
-  const [entries, setEntries] = useState(() => getEntries());
-  const [goal, setGoalState] = useState(() => getGoal());
+  const [entries, setEntries] = useState(() => getEntries())
+  const [goal, setGoalState] = useState(() => getGoal())
+  const { t } = useLanguage()
 
   function handleAdd(entry) {
-    setEntries(addEntry(entry));
+    setEntries(addEntry(entry))
   }
 
   function handleDelete(id) {
-    setEntries(deleteEntry(id));
+    setEntries(deleteEntry(id))
   }
 
   return (
@@ -36,22 +39,20 @@ export default function Dashboard() {
               <ArrowLeft size={20} />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">
-                GullakAI
-              </h1>
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">
-                Tu asesor de ahorro diario
-              </p>
+              <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">{t.appName}</h1>
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">{t.tagline}</p>
             </div>
           </div>
+
           <div className="flex items-center gap-2">
             <Link
               to="/reports"
               className="flex items-center gap-1.5 text-sm bg-white dark:bg-neutral-900 text-neutral-600 dark:text-neutral-300 px-3 py-2 rounded-lg hover:bg-neutral-100 dark:hover:bg-neutral-800 transition"
             >
               <BarChart3 size={16} />
-              Reportes
+              {t.reports}
             </Link>
+            <LanguageSelector />
             <ThemeToggle />
           </div>
         </header>
@@ -60,11 +61,7 @@ export default function Dashboard() {
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2">
-            <SavingsGoal
-              entries={entries}
-              goal={goal}
-              onGoalChange={setGoalState}
-            />
+            <SavingsGoal entries={entries} goal={goal} onGoalChange={setGoalState} />
           </div>
           <StreakCard entries={entries} />
         </div>
@@ -80,5 +77,5 @@ export default function Dashboard() {
         </div>
       </div>
     </div>
-  );
+  )
 }

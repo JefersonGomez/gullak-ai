@@ -5,6 +5,7 @@ import {
   Legend,
 } from "chart.js"
 import { Pie } from "react-chartjs-2"
+import { useLanguage } from "../lib/useLanguage"
 
 ChartJS.register(ArcElement, Tooltip, Legend)
 
@@ -16,6 +17,7 @@ const COLORS = {
 }
 
 export default function ExpenseCategoryChart({ entries }) {
+  const { t } = useLanguage()
   const totals = entries.reduce((acc, e) => {
     const cat = e.category || "Otros"
     acc[cat] = (acc[cat] || 0) + e.expenses
@@ -27,7 +29,7 @@ export default function ExpenseCategoryChart({ entries }) {
   if (labels.length === 0) {
     return (
       <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6 text-center text-neutral-400 dark:text-neutral-500">
-        Sin datos de gastos por categoría todavía.
+        {t.noCategoryData}
       </div>
     )
   }
@@ -46,7 +48,7 @@ export default function ExpenseCategoryChart({ entries }) {
   return (
     <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6">
       <h2 className="text-lg font-semibold text-neutral-800 dark:text-white mb-4">
-        Gastos por categoría
+        {t.categoryChartTitle}
       </h2>
       <div className="max-w-[240px] mx-auto">
         <Pie data={data} options={{ plugins: { legend: { position: "bottom" } } }} />

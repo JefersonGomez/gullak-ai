@@ -3,11 +3,14 @@ import { Link } from "react-router-dom"
 import { ArrowLeft, Download } from "lucide-react"
 import { getEntries, exportToCSV } from "../lib/storage"
 import ThemeToggle from "../components/ThemeToggle"
+import LanguageSelector from "../components/LanguageSelector"
 import ExpenseCategoryChart from "../components/ExpenseCategoryChart"
+import { useLanguage } from "../lib/useLanguage"
 
 export default function Reports() {
   const [entries] = useState(() => getEntries())
-  const [range, setRange] = useState("all") // all | 7 | 30
+  const [range, setRange] = useState("all")
+  const { t } = useLanguage()
 
   const filtered = entries.filter((e) => {
     if (range === "all") return true
@@ -38,18 +41,21 @@ export default function Reports() {
               <ArrowLeft size={20} />
             </Link>
             <div>
-              <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">Reportes</h1>
-              <p className="text-neutral-500 dark:text-neutral-400 text-sm">Análisis detallado de tu negocio</p>
+              <h1 className="text-2xl font-bold text-neutral-900 dark:text-white">{t.reports}</h1>
+              <p className="text-neutral-500 dark:text-neutral-400 text-sm">{t.reportsSubtitle}</p>
             </div>
           </div>
-          <ThemeToggle />
+          <div className="flex items-center gap-2">
+            <LanguageSelector />
+            <ThemeToggle />
+          </div>
         </header>
 
         <div className="flex gap-2">
           {[
-            { key: "7", label: "Últimos 7 días" },
-            { key: "30", label: "Últimos 30 días" },
-            { key: "all", label: "Todo" },
+            { key: "7", label: t.last7 },
+            { key: "30", label: t.last30 },
+            { key: "all", label: t.allTime },
           ].map((opt) => (
             <button
               key={opt.key}
@@ -67,50 +73,49 @@ export default function Reports() {
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-5">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">Ganancia neta del período</p>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">{t.netProfitPeriod}</p>
             <p className={`text-2xl font-bold ${net >= 0 ? "text-emerald-600 dark:text-emerald-400" : "text-red-500"}`}>
               ₹{net.toLocaleString()}
             </p>
           </div>
           <div className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-5">
-            <p className="text-sm text-neutral-500 dark:text-neutral-400">Promedio diario</p>
+            <p className="text-sm text-neutral-500 dark:text-neutral-400">{t.avgDaily}</p>
             <p className="text-2xl font-bold text-neutral-800 dark:text-white">₹{avgDaily.toFixed(0)}</p>
           </div>
           <div className="bg-emerald-50 dark:bg-emerald-950/40 rounded-2xl shadow-sm p-5">
-            <p className="text-sm text-emerald-700 dark:text-emerald-400">Proyección a 30 días</p>
+            <p className="text-sm text-emerald-700 dark:text-emerald-400">{t.projection30}</p>
             <p className="text-2xl font-bold text-emerald-700 dark:text-emerald-400">₹{projected30.toFixed(0)}</p>
           </div>
         </div>
 
-        {/* NUEVA ESTRUCTURA CON GRID */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-neutral-800 dark:text-white">
-                Detalle ({sorted.length} registros)
+                {t.detailRecords} ({sorted.length} {t.records})
               </h2>
               <button
                 onClick={() => exportToCSV(sorted)}
                 className="flex items-center gap-1.5 text-sm text-emerald-600 dark:text-emerald-400 hover:underline"
               >
                 <Download size={14} />
-                Exportar CSV
+                {t.exportCSV}
               </button>
             </div>
 
             {sorted.length === 0 ? (
               <p className="text-center text-neutral-400 dark:text-neutral-500 py-8">
-                No hay registros en este período.
+                {t.noRecordsPeriod}
               </p>
             ) : (
               <div className="overflow-x-auto">
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="text-left text-neutral-500 dark:text-neutral-400 border-b border-neutral-100 dark:border-neutral-800">
-                      <th className="pb-2 font-medium">Fecha</th>
-                      <th className="pb-2 font-medium">Ventas</th>
-                      <th className="pb-2 font-medium">Gastos</th>
-                      <th className="pb-2 font-medium">Neto</th>
+                      <th className="pb-2 font-medium">{t.colDate}</th>
+                      <th className="pb-2 font-medium">{t.colSales}</th>
+                      <th className="pb-2 font-medium">{t.colExpenses}</th>
+                      <th className="pb-2 font-medium">{t.colNet}</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -132,7 +137,6 @@ export default function Reports() {
               </div>
             )}
           </div>
-          
           <ExpenseCategoryChart entries={filtered} />
         </div>
       </div>

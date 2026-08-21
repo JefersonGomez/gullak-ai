@@ -1,7 +1,7 @@
 import { Flame } from "lucide-react"
+import { useLanguage } from "../lib/useLanguage"
 
 function calculateStreak(entries) {
-  // Ordenamos por fecha descendente (más reciente primero)
   const sorted = [...entries].sort((a, b) => new Date(b.date) - new Date(a.date))
 
   let streak = 0
@@ -17,6 +17,7 @@ function calculateStreak(entries) {
 }
 
 export default function StreakCard({ entries }) {
+  const { t } = useLanguage()
   const streak = calculateStreak(entries)
 
   return (
@@ -25,9 +26,9 @@ export default function StreakCard({ entries }) {
         <Flame size={22} />
       </div>
       <div>
-        <p className="text-sm text-neutral-500 dark:text-neutral-400">Racha de días positivos</p>
+        <p className="text-sm text-neutral-500 dark:text-neutral-400">{t.streak}</p>
         <p className="text-xl font-bold text-orange-500 dark:text-orange-400">
-          {streak} {streak === 1 ? "día" : "días"}
+          {streak} {streak === 1 ? t.day : t.days}
         </p>
       </div>
     </div>

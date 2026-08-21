@@ -1,38 +1,33 @@
-import { useState } from "react";
+import { useState } from "react"
+import { useLanguage } from "../lib/useLanguage"
 
 export default function EntryForm({ onAdd }) {
-  const [sales, setSales] = useState("");
-  const [expenses, setExpenses] = useState("");
-  const [category, setCategory] = useState("Inventario");
+  const [sales, setSales] = useState("")
+  const [expenses, setExpenses] = useState("")
+  const [category, setCategory] = useState("Inventario")
+  const { t } = useLanguage()
 
   function handleSubmit(e) {
-    e.preventDefault();
-    if (!sales || !expenses) return;
+    e.preventDefault()
+    if (!sales || !expenses) return
 
     onAdd({
       date: new Date().toISOString().split("T")[0],
       sales: Number(sales),
       expenses: Number(expenses),
       category,
-    });
+    })
 
-    setSales("");
-    setExpenses("");
+    setSales("")
+    setExpenses("")
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6 flex flex-col gap-4"
-    >
-      <h2 className="text-lg font-semibold text-neutral-800 dark:text-white">
-        Registro de hoy
-      </h2>
+    <form onSubmit={handleSubmit} className="bg-white dark:bg-neutral-900 rounded-2xl shadow-sm p-6 flex flex-col gap-4">
+      <h2 className="text-lg font-semibold text-neutral-800 dark:text-white">{t.todayEntry}</h2>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-neutral-600 dark:text-neutral-400">
-          Ventas del día (₹)
-        </label>
+        <label className="text-sm text-neutral-600 dark:text-neutral-400">{t.salesLabel}</label>
         <input
           type="number"
           value={sales}
@@ -43,9 +38,7 @@ export default function EntryForm({ onAdd }) {
       </div>
 
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-neutral-600 dark:text-neutral-400">
-          Gastos del día (₹)
-        </label>
+        <label className="text-sm text-neutral-600 dark:text-neutral-400">{t.expensesLabel}</label>
         <input
           type="number"
           value={expenses}
@@ -54,10 +47,9 @@ export default function EntryForm({ onAdd }) {
           placeholder="0"
         />
       </div>
+
       <div className="flex flex-col gap-1">
-        <label className="text-sm text-neutral-600 dark:text-neutral-400">
-          Categoría del gasto
-        </label>
+        <label className="text-sm text-neutral-600 dark:text-neutral-400">{t.categoryLabel}</label>
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
@@ -74,8 +66,8 @@ export default function EntryForm({ onAdd }) {
         type="submit"
         className="bg-emerald-600 text-white rounded-lg py-2 font-medium hover:bg-emerald-700 transition"
       >
-        Guardar registro
+        {t.save}
       </button>
     </form>
-  );
+  )
 }
